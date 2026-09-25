@@ -20,11 +20,35 @@ password when prompted. Rerunning bootstrap preserves existing accounts and
 data. For noninteractive setup, use `.\bootstrap.ps1 -SkipAdminSetup`; create an
 admin later with `docker compose exec auth python manage.py createsuperuser`.
 
-Open Alliance Auth at <http://192-168-0-170.sslip.io:8000/> and Wiki.js at
-<http://192-168-0-170.sslip.io:3000/>. Sign in to Alliance Auth admin at
-`<AA_SITE_URL>/admin/` with your new superuser account. Complete the Wiki.js
-setup wizard on first launch using the Wiki.js URL as its site URL; keep the
-local Wiki.js administrator account for recovery.
+## Set your URLs
+
+The `192-168-0-170.sslip.io` address in `.env.example` is an example for the
+original development machine, not an address that will work on every computer.
+After bootstrap, find the IPv4 address of your active LAN adapter with
+`ipconfig` in PowerShell (for example, `192.168.0.170`). Replace its dots with
+hyphens and append `.sslip.io` (for example, `192-168-0-170.sslip.io`). This
+public DNS service resolves that hostname to the IP encoded in it; no DNS
+record or hosts-file edit is needed. It requires working DNS and an IP reachable
+from both your browser and the Wiki.js container.
+
+Set `AA_SITE_URL=http://<your-ip-with-dashes>.sslip.io:8000` in the ignored
+`.env` file, then reload the auth service with
+`docker compose up -d --force-recreate auth`. Use the **same hostname** with
+port `8000` for Alliance Auth and port `3000` for Wiki.js. For the example IP,
+these are <http://192-168-0-170.sslip.io:8000/> and
+<http://192-168-0-170.sslip.io:3000/>. Compose publishes both ports on the
+host. Open the Auth URL in your browser before configuring Wiki.js OIDC; if it
+does not load, check that DNS resolves to your IP and that your firewall allows
+the published ports on your trusted network. `localhost` alone is not suitable
+as the OIDC issuer: inside Wiki.js it refers to the Wiki.js container, not the
+Alliance Auth container. If your LAN address changes, update `.env` and recreate
+auth again; update the Wiki.js site URL, OIDC issuer/endpoints, and registered
+redirect URLs to match.
+
+Sign in to Alliance Auth admin at `<AA_SITE_URL>/admin/` with your new
+superuser account. Complete the Wiki.js setup wizard on first launch using
+the Wiki.js URL as its site URL; keep the local Wiki.js administrator account
+for recovery.
 
 For EVE SSO, register a development application at
 <https://developers.eveonline.com> with the `publicData` scope and exact
@@ -32,12 +56,9 @@ callback `<AA_SITE_URL>/sso/callback`. Set `AA_ESI_CLIENT_ID` and
 `AA_ESI_CLIENT_SECRET` in the ignored `.env` and restart the auth container.
 The superuser can use Alliance Auth admin without EVE SSO.
 
-The default `AA_SITE_URL` uses `192-168-0-170.sslip.io`, which resolves to
-`192.168.0.170`. Change it in `.env` if your host LAN IP changes and restart
-the containers. The hostname must resolve from your browser and from the Wiki.js
-container; use the same hostname and port in OIDC issuer settings. Allow inbound
-ports 8000 and 3000 through the host firewall for other LAN devices. Redis and
-Wiki.js's PostgreSQL stay internal. This plain-HTTP setup is for trusted local
+Use the URL configured above for the EVE callback. Allow inbound ports 8000
+and 3000 through the host firewall for other LAN devices. Redis and Wiki.js's
+PostgreSQL stay internal. This plain-HTTP setup is for trusted local
 development only; Celery tasks run eagerly without a worker.
 
 ## Plugins
