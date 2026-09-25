@@ -1,0 +1,5 @@
+.env
+*.pem
+__pycache__/
+*.pyc
+allianceauth/alliance_auth.sqlite3

@@ -1,0 +1,66 @@
+[25/Sep/2026 07:25:55] INFO [allianceauth.eveonline.providers:181] ESI client will be loaded on-demand
+[25/Sep/2026 07:25:59] ERROR [allianceauth.authentication.task_statistics.helpers:44] Failed to establish a connection with Redis. This EventSeries object is disabled.
+Traceback (most recent call last):
+  File "E:\allianceauth-wiki-js\.venv\Lib\site-packages\redis\connection.py", line 1055, in connect_check_health
+    sock = self._connect()
+           ^^^^^^^^^^^^^^^
+  File "E:\allianceauth-wiki-js\.venv\Lib\site-packages\redis\connection.py", line 1617, in _connect
+    raise err
+  File "E:\allianceauth-wiki-js\.venv\Lib\site-packages\redis\connection.py", line 1601, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\allianceauth-wiki-js\.venv\Lib\site-packages\allianceauth\authentication\task_statistics\helpers.py", line 41, in get_redis_client_or_stub
+    if not redis.ping():
+           ^^^^^^^^^^^^
+  File "E:\allianceauth-wiki-js\.venv\Lib\site-packages\redis\commands\core.py", line 2037, in ping
+    return self.execute_command("PING", **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\allianceauth-wiki-js\.venv\Lib\site-packages\redis\client.py", line 867, in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\allianceauth-wiki-js\.venv\Lib\site-packages\redis\client.py", line 873, in _execute_command
+    conn = self.connection or pool.get_connection()
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\allianceauth-wiki-js\.venv\Lib\site-packages\redis\utils.py", line 258, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\allianceauth-wiki-js\.venv\Lib\site-packages\redis\connection.py", line 3273, in get_connection
+    connection.connect()
+  File "E:\allianceauth-wiki-js\.venv\Lib\site-packages\redis\connection.py", line 1028, in connect
+    self.retry.call_with_retry(
+  File "E:\allianceauth-wiki-js\.venv\Lib\site-packages\redis\retry.py", line 132, in call_with_retry
+    raise error
+  File "E:\allianceauth-wiki-js\.venv\Lib\site-packages\redis\retry.py", line 120, in call_with_retry
+    return do()
+           ^^^^
+  File "E:\allianceauth-wiki-js\.venv\Lib\site-packages\redis\connection.py", line 1029, in <lambda>
+    lambda: self.connect_check_health(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\allianceauth-wiki-js\.venv\Lib\site-packages\redis\connection.py", line 1077, in connect_check_health
+    raise e
+redis.exceptions.ConnectionError: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+[25/Sep/2026 07:27:59] INFO [allianceauth.eveonline.providers:181] ESI client will be loaded on-demand
+[25/Sep/2026 07:28:15] INFO [allianceauth.eveonline.providers:181] ESI client will be loaded on-demand
+[25/Sep/2026 07:28:25] INFO [allianceauth.eveonline.providers:181] ESI client will be loaded on-demand
+[25/Sep/2026 07:34:08] INFO [allianceauth.eveonline.providers:181] ESI client will be loaded on-demand
+[25/Sep/2026 07:34:46] INFO [allianceauth.eveonline.providers:181] ESI client will be loaded on-demand
+[25/Sep/2026 07:35:17] INFO [allianceauth.eveonline.providers:181] ESI client will be loaded on-demand
+[25/Sep/2026 07:39:03] INFO [allianceauth.eveonline.providers:181] ESI client will be loaded on-demand
+[25/Sep/2026 07:39:13] INFO [allianceauth.eveonline.providers:181] ESI client will be loaded on-demand
+[25/Sep/2026 07:41:27] INFO [allianceauth.eveonline.providers:181] ESI client will be loaded on-demand
+[25/Sep/2026 08:04:25] INFO [allianceauth.eveonline.providers:181] ESI client will be loaded on-demand
+[25/Sep/2026 08:14:43] INFO [allianceauth.eveonline.providers:181] ESI client will be loaded on-demand
+[25/Sep/2026 08:14:44] INFO [allianceauth.eveonline.providers:181] ESI client will be loaded on-demand
+[25/Sep/2026 08:15:58] INFO [allianceauth.eveonline.providers:181] ESI client will be loaded on-demand
+[25/Sep/2026 08:15:58] INFO [allianceauth.eveonline.providers:181] ESI client will be loaded on-demand
+[25/Sep/2026 08:17:56] INFO [allianceauth.eveonline.providers:181] ESI client will be loaded on-demand
+[25/Sep/2026 08:18:17] INFO [allianceauth.eveonline.providers:181] ESI client will be loaded on-demand
+[25/Sep/2026 08:18:18] INFO [allianceauth.services.signals:178] Updating Names due to change of main character for user admin
+[25/Sep/2026 08:18:19] INFO [allianceauth.eveonline.providers:181] ESI client will be loaded on-demand
+[25/Sep/2026 08:19:01] INFO [allianceauth.eveonline.providers:181] ESI client will be loaded on-demand
+[25/Sep/2026 08:19:02] INFO [allianceauth.eveonline.providers:181] ESI client will be loaded on-demand
+[25/Sep/2026 08:19:29] INFO [allianceauth.eveonline.providers:181] ESI client will be loaded on-demand

@@ -1,0 +1,7 @@
+[
+	{
+		"package": "allianceauth-oidc-provider",
+		"app": "allianceauth_oidc",
+		"url": "git+https://github.com/Navatalin/allianceauth-oidc-provider.git@master"
+	}
+]

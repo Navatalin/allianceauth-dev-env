@@ -1,0 +1,65 @@
+name: allianceauth-dev
+
+services:
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    volumes:
+      - redis-data:/data
+
+  auth:
+    build: .
+    depends_on:
+      redis:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      ALLIANCEAUTH_OIDC_EMAIL_DOMAIN: ${ALLIANCEAUTH_OIDC_EMAIL_DOMAIN:-test.com}
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./allianceauth:/app/allianceauth
+      - ./oidc-private.pem:/run/secrets/oidc-private.pem:ro
+      - auth-data:/data
+
+  wiki-db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: wiki
+      POSTGRES_USER: wiki
+      POSTGRES_PASSWORD: wiki-dev-password
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U wiki -d wiki"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    volumes:
+      - wiki-db-data:/var/lib/postgresql/data
+
+  wiki:
+    image: ghcr.io/requarks/wiki:2
+    depends_on:
+      wiki-db:
+        condition: service_healthy
+    environment:
+      DB_TYPE: postgres
+      DB_HOST: wiki-db
+      DB_PORT: 5432
+      DB_NAME: wiki
+      DB_USER: wiki
+      DB_PASS: wiki-dev-password
+    ports:
+      - "3000:3000"
+    volumes:
+      - wiki-data:/wiki/data/content
+
+volumes:
+  redis-data:
+  auth-data:
+  wiki-db-data:
+  wiki-data:
